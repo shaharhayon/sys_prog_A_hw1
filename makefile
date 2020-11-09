@@ -5,7 +5,7 @@ FLAGS= -Wall -g
 all: mains maind
 
 mains: main.o libmyMath.a
-	$(CC) $(FLAGS) -o mains main.o libmyMath.a
+	$(CC) $(FLAGS) -o mains main.o -L. -lmyMath
 
 maind: main.o libmyMath.so
 	$(CC) $(FLAGS) -o maind main.o ./libmyMath.so
