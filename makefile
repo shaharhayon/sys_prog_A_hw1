@@ -6,27 +6,35 @@ all: mains maind
 
 mains: main.o libmyMath.a
 	$(CC) $(FLAGS) -o mains main.o -L. -lmyMath
+	
+libmyMath.a: basicMaths.o powers.o
+	$(AR) -rcs libmyMath.a basicMaths.o powers.o
 
+mymaths: basicMaths.o power.o
+	$(AR) -rcs libmyMath.a basicMaths.o powers.o
+	
+basicMaths.o: basicMath.c myMath.h
+	$(CC) $(FLAGS) -c -o basicMaths.o basicMath.c 
+
+powers.o: power.c myMath.h
+	$(CC) $(FLAGS) -c -o powers.o power.c
+	
+	
 maind: main.o libmyMath.so
 	$(CC) $(FLAGS) -o maind main.o ./libmyMath.so
 
-libmyMath.a: basicMath.o power.o
-	$(AR) -rcs libmyMath.a basicMath.o power.o
+libmyMath.so: basicMathd.o powerd.o
+	$(CC) -shared basicMathd.o powerd.o -o libmyMath.so
 
-libmyMath.so: basicMath.o power.o
-	$(CC) -shared basicMath.o power.o -o libmyMath.so
+mymathd: basicMathd.o powerd.o
+	$(CC) -shared basicMathd.o powerd.o -o libmyMath.so
 
-mymaths: basicMath.o power.o
-	$(AR) -rcs libmyMath.a basicMath.o power.o
+basicMathd.o: basicMath.c myMath.h
+	$(CC) $(FLAGS) -c -fPIC basicMath.c -o basicMathd.o
 
-mymathd: basicMath.o power.o
-	$(CC) -shared basicMath.o power.o -o libmyMath.so
-
-basicMath.o: basicMath.c myMath.h
-	$(CC) $(FLAGS) -c basicMath.c
-
-power.o: power.c myMath.h
-	$(CC) $(FLAGS) -c power.c
+powerd.o: power.c myMath.h
+	$(CC) $(FLAGS) -c -fPIC power.c -o powerd.o
+	
 
 main.o: main.c
 	$(CC) $(FLAGS) -c main.c
