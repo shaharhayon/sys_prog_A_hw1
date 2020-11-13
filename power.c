@@ -10,8 +10,13 @@ double Exponent(int x){
 
 double Power(double x, int y){
   double result = 1;
-  for(int i = 0; i < y; i++){
-    result *= x;
-  }
+  if(y > 0)
+    for(int i = 0; i < y; i++){
+      result *= x;
+    }
+  else
+    for(int i = 0; i > y; i--){
+      result /= x;
+    }
   return result;
 }
