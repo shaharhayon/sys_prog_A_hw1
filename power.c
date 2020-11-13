@@ -2,9 +2,14 @@
 
 double Exponent(int x){
   double result = 1;
-  for(int i = 0; i < x; i++){
-    result *= EXP;
-  }
+  if(x > 0)
+    for(int i = 0; i < x; i++){
+      result *= EXP;
+    }
+  else
+    for(int i = 0; i > x; i--){
+      result /= EXP;
+    }
   return result;
 }
 
